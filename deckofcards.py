@@ -42,76 +42,85 @@ class Card:
 def playBlackJack():
 	decision = True
 	while decision:
-		print("starting a new game...\n")
-		time.sleep(2)
-		deck = Deck(4, 13)
-		playerCards = []
-		dealerCards = []
+		while True:
+			print("starting a new game...\n")
+			time.sleep(2)
+			deck = Deck(4, 13)
+			playerCards = []
+			dealerCards = []
 
-		#generate starting cards for dealer and player
-		playerCards.append(deck.draw())
-		playerCards.append(deck.draw())
-		dealerCards.append(deck.draw())
-		dealerCards.append(deck.draw())
+			#generate starting cards for dealer and player
+			playerCards.append(deck.draw())
+			playerCards.append(deck.draw())
+			dealerCards.append(deck.draw())
+			dealerCards.append(deck.draw())
 
-		playerSum = playerCards[0].value + playerCards[1].value
-		dealerSum = dealerCards[0].value
+			playerSum = playerCards[0].value + playerCards[1].value
+			dealerSum = dealerCards[0].value
 
-		while playerSum < 21:
-			print(f"You: {playerSum}")
-			print(f"Dealer: {dealerSum}")
-			decision = input("What would you like to do? Type h to hit and s to stay \n")
-			#generate another card
-			if decision == "h":
-				playerCards.append(deck.draw())
-				#an ace was drawn
-				if playerCards[-1].value == 11:
-					if playerSum + 11 > 21:
-						playerCards[-1].value = 1
-				playerSum += playerCards[-1].value
-			#move to dealer
-			else:
+			while playerSum < 21:
+				print(f"You: {playerSum}")
+				print(f"Dealer: {dealerSum}")
+				decision = input("What would you like to do? Type h to hit and s to stay \n")
+				#generate another card
+				if decision == "h":
+					playerCards.append(deck.draw())
+					#an ace was drawn
+					if playerCards[-1].value == 11:
+						if playerSum + 11 > 21:
+							playerCards[-1].value = 1
+					playerSum += playerCards[-1].value
+				#move to dealer
+				else:
+					break
+
+			print(f"Player sum is: {playerSum} \n")
+			
+			if playerSum > 21:
+				print("player went over 21, dealer wins.")
 				break
-
-		print(f"Player sum is: {playerSum} \n")
-		
-		if playerSum > 21:
-			print("player went over 21, dealer wins.")
-			return
-		
-		print("Now it's the dealer's turn...")
-		time.sleep(3)
-		print("Revealing the dealer's second card...")
-		print("-----------------------------------------------")
-
-		dealerSum += dealerCards[-1].value
-
-		while dealerSum < 21:
-			print(f"Dealer: {dealerSum}\n")
-			print(f"You: {playerSum}")
-			print("-----------------------------------------------")
+			
+			print("Now it's the dealer's turn...")
 			time.sleep(3)
+			print("Revealing the dealer's second card...")
+			print("-----------------------------------------------")
 
-			#logic for when dealer should hit or stick
-			if dealerSum > playerSum:
+			dealerSum += dealerCards[-1].value
+
+			while dealerSum < 21:
+				print(f"Dealer: {dealerSum}\n")
+				print(f"You: {playerSum}")
+				print("-----------------------------------------------")
+				time.sleep(3)
+
+				#logic for when dealer should hit or stick
+				if dealerSum > playerSum:
+					break
+				elif dealerSum == playerSum and dealerSum > 16:
+					break
+
+				else:
+					dealerCards.append(deck.draw())
+					dealerSum += dealerCards[-1].value
+
+
+			print(f"Player sum is: {playerSum} \n")
+			print(f"Dealer sum is: {dealerSum} \n")
+			if playerSum == dealerSum:
+				print("Tie game!")
 				break
-			elif dealerSum == playerSum and dealerSum > 16:
-				break
-
-			else:
-				dealerCards.append(deck.draw())
-				dealerSum += dealerCards[-1].value
-
-
-		print(f"Player sum is: {playerSum} \n")
-		print(f"Dealer sum is: {dealerSum} \n")
-		if playerSum == dealerSum:
-			print("Tie game!")
-			return
-		winner = "player" if playerSum > dealerSum or dealerSum > 21 else "dealer"
-		print(f"{winner} wins!")
+			winner = "player" if playerSum > dealerSum or dealerSum > 21 else "dealer"
+			print(f"{winner} wins!")
+			break
 
 		decision = input("want to play again? Y or N\n")
+
+		decision = decision.lower()
+		if decision == "y":
+			decision = True
+		else:
+			decision = False
+
 
 
 		

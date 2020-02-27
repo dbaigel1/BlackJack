@@ -1,0 +1,11 @@
+Project created by Daniel Baigel on 2/26/2020
+
+BlackJack Simulation Game
+
+Play endless BlackJack against the computer!
+
+Run the game in your terminal using: python3 deckofcards.py
+
+Respond to in-game prompts with the corresponding letters.
+
+Have fun!
